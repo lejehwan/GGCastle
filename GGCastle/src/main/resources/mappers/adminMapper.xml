@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sga.sol.mapper.adminMapper">
+
+	<select id="getFailUser" resultType="GetChartUserDTO">
+		select user_id,
+		count(user_id) from data where auth_yn = false group by user_id order
+		by count(user_id) desc limit 3;
+	</select>
+
+	<select id="getSuccessUser" resultType="GetChartUserDTO">
+		select user_id,
+		count(user_id) from data where auth_yn = true group by user_id order
+		by count(user_id) desc limit 10;
+	</select>
+
+	<select id="getAuthCntByDay" resultType="GetChartDateDTO">
+		<![CDATA[
+			with recursive dt as
+			(
+			select 1 as date
+			union all
+			select date+1 from dt where date<31
+			)
+			select date, count(extract(day from auth_time))
+			from dt
+			left join data on dt.date = extract(day from auth_time)
+			group by date
+			order by date;
+		]]>
+	</select>
+	
+	<update id="updateAPIKey" parameterType="MemberDTO">
+		update member set apiKey = #{apiKey} where id=#{id};
+	</update>
+	
+	<update id="userLockOnOff" parameterType="String">
+		update member set user_lock = not user_lock where id = #{loginId};
+	</update>
+	
+	<select id="currentUserLock" parameterType="String" resultType="Boolean">
+		select user_lock from member where id = #{loginId};
+	</select>
+
+</mapper>
