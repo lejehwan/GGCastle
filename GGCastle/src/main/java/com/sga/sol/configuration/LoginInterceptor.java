@@ -47,10 +47,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		String ip = getClientIpAddr(request);
 		log.info("ip={}",ip);
-		boolean check = ip.equals("192.168.20.26");	
+		boolean check = ip.equals("172.19.11.108");	
 		
 		HttpSession session = request.getSession();
-		if (!check) {
+		if (check) {
 			if (session == null || session.getAttribute(SessionConst.LOGIN_User) == null) {
 				response.sendRedirect("/login?redirectURL=" + request.getRequestURI());
 				return false;

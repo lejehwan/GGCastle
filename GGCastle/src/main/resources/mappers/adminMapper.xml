@@ -33,6 +33,14 @@
 		]]>
 	</select>
 	
+	<select id="getAllAuthCount" resultType="int">
+		select count(*) from data;
+	</select>
+	
+	<select id="getSuccessAuthCount" resultType="int">
+		select count(*) from data where auth_yn=true;
+	</select>
+	
 	<update id="updateAPIKey" parameterType="MemberDTO">
 		update member set apiKey = #{apiKey} where id=#{id};
 	</update>

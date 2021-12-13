@@ -31,6 +31,14 @@ public class AdminRepository {
 		return sqlSession.selectList(Namespace+".getAuthCntByDay");
 	}
 	
+	public int getAllAuthCount() {
+		return sqlSession.selectOne(Namespace+".getAllAuthCount");
+	}
+	
+	public int getSuccessAuthCount() {
+		return sqlSession.selectOne(Namespace+".getSuccessAuthCount");
+	}
+	
 	public void updateAPIKey(MemberDTO member) {
 		sqlSession.update(Namespace+".updateAPIKey", member);
 	}

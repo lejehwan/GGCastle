@@ -35,8 +35,14 @@ public class DashBoardController {
 		HttpSession session = request.getSession();
 		MemberDTO member = (MemberDTO) session.getAttribute(SessionConst.LOGIN_User);
 		List<GetChartUserDTO> failUsers = adminService.getFailUser();
+		int totalCount = adminService.getAllAuthCount();
+		int successCount = adminService.getSuccessAuthCount();
 		model.addAttribute("member",member);
 		model.addAttribute("failUsers", failUsers);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("successCount", successCount);
+		model.addAttribute("failCount", totalCount-successCount);
+		model.addAttribute("percentage", (int)(((float)successCount / (float)totalCount)*100));
 		return "home";
 	}
 	

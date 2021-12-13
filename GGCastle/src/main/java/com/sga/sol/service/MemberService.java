@@ -24,6 +24,7 @@ public class MemberService {
 	private BCryptPasswordEncoder encoder;
 	
 	public void joinMember(MemberDTO member) {
+		member.setRole("user");
 		member.setApiKey(encode(member.getApiKey()));
 		member.setPw(encoder.encode(member.getPw()));
 		memberRepository.joinMember(member);

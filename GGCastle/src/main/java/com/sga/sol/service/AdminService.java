@@ -35,6 +35,14 @@ public class AdminService {
 		return adminRepository.getAuthCntByDay();
 	}
 	
+	public int getAllAuthCount() {
+		return adminRepository.getAllAuthCount();
+	}
+	
+	public int getSuccessAuthCount() {
+		return adminRepository.getSuccessAuthCount();
+	}
+	
 	public void updateAPIKey(MemberDTO member) {
 		adminRepository.updateAPIKey(member);
 	}

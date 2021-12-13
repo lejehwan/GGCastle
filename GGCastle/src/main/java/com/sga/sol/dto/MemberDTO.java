@@ -17,5 +17,6 @@ public class MemberDTO {
 	private String apiKey;
 	private String email;
 	private boolean user_lock;
+	private String role;
 	
 }

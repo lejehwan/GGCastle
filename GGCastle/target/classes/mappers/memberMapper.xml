@@ -6,7 +6,7 @@
 <mapper namespace="com.sga.sol.mapper.memberMapper">
 
 	<insert id="joinMember" parameterType="MemberDTO">
-		insert into member(id,pw,email,apiKey,auth_yn,user_lock) values(#{id},#{pw},#{email},#{apiKey},false,false)
+		insert into member(id,pw,email,apiKey,auth_yn,user_lock,role) values(#{id},#{pw},#{email},#{apiKey},false,false,#{user})
 	</insert>
 
  	<select id="checkLoginId" parameterType="String" resultType="MemberDTO">
