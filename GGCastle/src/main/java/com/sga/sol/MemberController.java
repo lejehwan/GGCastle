@@ -143,7 +143,7 @@ public class MemberController {
 
 	
 	@CrossOrigin(origins = "*")
-	@PostMapping(value = "/api/auth/text")
+//	@PostMapping(value = "/api/auth/text")
 	@ResponseBody
 	public ResponseDTO<Integer> certificationByText(@RequestParam String authKey, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -162,8 +162,9 @@ public class MemberController {
 	@RequestMapping(value = "/api/auth/json" ,method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseDTO<Integer> certificationByJSON(@RequestBody AuthDTO authKey, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		MemberDTO member = (MemberDTO) session.getAttribute(SessionConst.LOGIN_User);
+		MemberDTO member = memberService.checkLoginId(authKey.getId());
+//		HttpSession session = request.getSession();
+//		MemberDTO member = (MemberDTO) session.getAttribute(SessionConst.LOGIN_User);
 		String decAPIKey = memberService.decode(member.getApiKey());
 		boolean check = tokenService.validate(authKey.getAuthKey(),decAPIKey);
 		if (check) {

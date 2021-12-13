@@ -50,6 +50,11 @@
 
 									<form class="user">
 										<div class="form-group">
+											<input type="text" id="id"
+												class="form-control form-control-user"
+												placeholder="Enter user id">
+										</div>
+										<div class="form-group">
 											<input type="text" id="authKey"
 												class="form-control form-control-user"
 												placeholder="Enter OTP Authenticator">

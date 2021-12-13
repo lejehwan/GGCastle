@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class AuthDTO {
-
+	
+	private String id;
 	private String authKey;
 }

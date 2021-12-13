@@ -6,7 +6,7 @@ let index = {
 		})
 	},
 
-	auth: function() {
+	/*auth: function() {
 		let authKey = $("#authKey").val();
 		$.ajax({
 			type: "POST",
@@ -23,10 +23,11 @@ let index = {
 			console.log(JSON.stringify(error));
 			location.href = "/errorPage";
 		});
-	},
+	},*/
 
 	auth: function() {
 		let data = {
+			id: $("#id").val(),
 			authKey: $("#authKey").val()
 		};
 		console.log(JSON.stringify(data));
