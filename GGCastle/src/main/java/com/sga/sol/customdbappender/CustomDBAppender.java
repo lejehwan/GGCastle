@@ -34,10 +34,10 @@ public class CustomDBAppender extends DBAppenderBase<ILoggingEvent>{
 			int i = 0;
 			for (Map.Entry<String, String> entry : event.getMDCPropertyMap().entrySet()) {
 				i++;
-				if (entry.getKey().equals(CustomDBAppenderColumnName.auth_time.toString())) {// timestamp
+				if (entry.getKey().equals(CustomDBAppenderColumnName.auth_time.toString())) {
 					stmt.setTimestamp(i, Timestamp.valueOf(entry.getValue()));
 				}
-				else if (entry.getKey().equals(CustomDBAppenderColumnName.auth_yn.toString())) {// boolean
+				else if (entry.getKey().equals(CustomDBAppenderColumnName.auth_yn.toString())) {
 					if (entry.getValue().equals("false")) {
 						stmt.setBoolean(i, false);
 					}else {

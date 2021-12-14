@@ -14,6 +14,7 @@ import org.slf4j.MDC;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
+import com.sga.sol.dto.AuthDTO;
 import com.sga.sol.dto.MemberDTO;
 import com.sga.sol.service.MemberService;
 
@@ -29,25 +30,24 @@ public class AOPLog {
 	private MemberService memberService;
 //	 ||" + "execution(* com.sga.sol.MemberController.socketInit(..))
 	
-	@Around("execution(* com.sga.sol.MemberController.certificationByJSON(..)) ||"
-			+ "execution(* com.sga.sol.MemberController.certificationByText(..))")
+	@Around("execution(* com.sga.sol.MemberController.certificationByJSON(..))")
 	public Object logging(ProceedingJoinPoint jp) throws Throwable {
 		Timestamp Time = memberService.getTimeNow();
-		HttpServletRequest request = null;
-		for (Object o : jp.getArgs()) {
-			if (o instanceof HttpServletRequest) {
-				request = (HttpServletRequest) o;
-			}
-		}
-		HttpSession session = request.getSession();
-		MemberDTO member = (MemberDTO)session.getAttribute(SessionConst.LOGIN_User);
+//		HttpServletRequest request = null;
+//		for (Object o : jp.getArgs()) {
+//			if (o instanceof HttpServletRequest) {
+//				request = (HttpServletRequest) o;
+//			}
+//		}
+//		HttpSession session = request.getSession();
+//		MemberDTO member = (MemberDTO)session.getAttribute(SessionConst.LOGIN_User);
 		
 		Object result = jp.proceed();
-		
-		boolean check = memberService.getAuthYN(member.getId());
+		AuthDTO authDTO = (AuthDTO)jp.getArgs()[0];
+		boolean check = memberService.getAuthYN(authDTO.getId());
 		MDC.put("auth_time", Time.toString());
-		MDC.put("userId", member.getId());
-		MDC.put("parameter", Arrays.toString(jp.getArgs()));
+		MDC.put("userId", authDTO.getId());
+		MDC.put("parameter", authDTO.getAuthKey());
 		MDC.put("auth_yn", String.valueOf(check));
 		log.info("create log", MDC.getCopyOfContextMap());
 		

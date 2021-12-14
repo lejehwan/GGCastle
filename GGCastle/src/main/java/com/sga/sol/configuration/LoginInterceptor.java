@@ -39,18 +39,22 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-//		String path = request.getRequestURL().toString();
 //		Resource resource = (Resource) pathMatchingResourcePatternResolver.getResource(path);
 //		System.out.println(path);
-//		boolean check = path.equals("http://localhost:*/**");
+//		boolean check = path.equals("172.19.11.108");
 //		System.out.println(check);
 		
 		String ip = getClientIpAddr(request);
 		log.info("ip={}",ip);
-		boolean check = ip.equals("172.19.11.108");	
 		
+		
+//		String path = request.getRequestURL().toString();
+//		String[] convPath = path.split("/");
+//		String ip = convPath[2].split(":")[0];
+		
+		boolean check = ip.equals("172.19.11.108");
 		HttpSession session = request.getSession();
-		if (check) {
+		if (check) {// true => 로그인 인터셉터 적용
 			if (session == null || session.getAttribute(SessionConst.LOGIN_User) == null) {
 				response.sendRedirect("/login?redirectURL=" + request.getRequestURI());
 				return false;
