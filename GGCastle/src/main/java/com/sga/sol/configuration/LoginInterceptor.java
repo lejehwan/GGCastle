@@ -45,14 +45,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 //		System.out.println(check);
 		
 		String ip = getClientIpAddr(request);
-		log.info("ip={}",ip);
+//		log.info("ip={}",ip);
 		
 		
 //		String path = request.getRequestURL().toString();
 //		String[] convPath = path.split("/");
 //		String ip = convPath[2].split(":")[0];
 		
-		boolean check = ip.equals("172.19.11.108");
+		boolean check = ip.equals("172.19.11.107");
 		HttpSession session = request.getSession();
 		if (check) {// true => 로그인 인터셉터 적용
 			if (session == null || session.getAttribute(SessionConst.LOGIN_User) == null) {

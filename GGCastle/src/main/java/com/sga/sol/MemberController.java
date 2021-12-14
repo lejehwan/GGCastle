@@ -104,33 +104,36 @@ public class MemberController {
 //					BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 //					Writer wr = new OutputStreamWriter(clientSocket.getOutputStream());
 					DataOutputStream das = new DataOutputStream(clientSocket.getOutputStream());
-					
-					String readData = br.readLine(); // 클라이언트로부터 읽어온 데이터
-					log.info("from Client >>" + readData);
-					
-					// readData != null
-					String[] conData = readData.split(",");
-					String memberId = conData[0];
-					String authKey = conData[1];
-					
-					MemberDTO member = memberService.checkLoginId(memberId);
-					boolean check = false;
-					if (member != null) {
-						String decAPIKey = memberService.decode(member.getApiKey());
-						check = tokenService.validate(authKey, decAPIKey);
+					String readData = "";
+					while (!(readData = br.readLine()).equals(null)) {
+//						String readData = br.readLine(); // 클라이언트로부터 읽어온 데이터
+						log.info("from Client >>" + readData);
+						
+						// readData != null
+						String[] conData = readData.split(",");
+						String memberId = conData[0];
+						String authKey = conData[1];
+						
+						MemberDTO member = memberService.checkLoginId(memberId);
+						boolean check = false;
+						if (member != null) {
+							String decAPIKey = memberService.decode(member.getApiKey());
+							check = tokenService.validate(authKey, decAPIKey);
+						}
+						if (check) {
+							memberService.authY(member.getId());
+							das.writeInt(OK);
+							das.flush();
+						}else if (!check) {
+							das.writeInt(UNAUTHORIZED);
+							das.flush();
+						}else{
+							das.writeInt(INTERNAL_SERVER_ERROR);
+							das.flush();
+							clientSocket.close();
+						}
 					}
-					if (check) {
-						memberService.authY(member.getId());
-						das.writeInt(OK);
-						das.flush();
-					}else if (!check) {
-						das.writeInt(UNAUTHORIZED);
-						das.flush();
-					}else{
-						das.writeInt(INTERNAL_SERVER_ERROR);
-						das.flush();
-						clientSocket.close();
-					}
+//					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
