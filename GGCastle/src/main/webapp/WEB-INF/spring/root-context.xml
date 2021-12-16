@@ -43,8 +43,8 @@
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
         <property name="host" value="smtp.gmail.com" /> <!-- gmail을 사용 -->
         <property name="port" value="587" />
-        <property name="username" value="rdsa2577@gmail.com" />
-        <property name="password" value="wjdghks1031@" />
+        <property name="username" value="이메일 발송 계정 아이디" />
+        <property name="password" value="이메일 발송 계정 비밀번호" />
         <property name="javaMailProperties">
             <props>
             	<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
