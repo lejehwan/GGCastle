@@ -36,25 +36,19 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 //	private final PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();
 
+//	String path = request.getRequestURL().toString();
+//	String[] convPath = path.split("/");
+//	String ip = convPath[2].split(":")[0];
+	// 172.19.11.108
+	
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-//		Resource resource = (Resource) pathMatchingResourcePatternResolver.getResource(path);
-//		System.out.println(path);
-//		boolean check = path.equals("172.19.11.108");
-//		System.out.println(check);
-		
 		String ip = getClientIpAddr(request);
-//		log.info("ip={}",ip);
-		
-		
-//		String path = request.getRequestURL().toString();
-//		String[] convPath = path.split("/");
-//		String ip = convPath[2].split(":")[0];
-		
-		boolean check = ip.equals("172.19.11.107");
+		boolean check = ip.equals("172.19.11.107");// 외부 접근 ip라면(예시 ip 입니다.)
 		HttpSession session = request.getSession();
-		if (check) {// true => 로그인 인터셉터 적용
+		if (check) {
 			if (session == null || session.getAttribute(SessionConst.LOGIN_User) == null) {
 				response.sendRedirect("/login?redirectURL=" + request.getRequestURI());
 				return false;

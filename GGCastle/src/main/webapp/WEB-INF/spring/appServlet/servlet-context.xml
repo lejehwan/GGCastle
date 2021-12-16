@@ -68,7 +68,7 @@
             <exclude-mapping path="/"/>
             <exclude-mapping path="/login"/>
             <exclude-mapping path="/join"/>
-            <exclude-mapping path="/errorPage"/>
+            <exclude-mapping path="/errorpage"/>
             <beans:ref bean="LoginInterceptor"/>
         </interceptor>
     </interceptors>
@@ -87,9 +87,8 @@
             <exclude-mapping path="/join"/>
             <exclude-mapping path="/auth"/>
             <exclude-mapping path="/api/auth/json"/>
-            <exclude-mapping path="/api/auth/text"/>
             <exclude-mapping path="/logout"/>
-            <exclude-mapping path="/errorPage"/>
+            <exclude-mapping path="/errorpage"/>
             <beans:ref bean="AuthInterceptor"/>
         </interceptor>
     </interceptors>
